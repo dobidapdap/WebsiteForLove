@@ -1,0 +1,84 @@
+:root {
+    --bg-color: rgba(255, 182, 193, 1); /* Light pink background */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Quicksand', sans-serif;
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 1s ease-in-out;
+}
+
+body::before {
+    content: none;
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    max-width: 500px;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.7);  /* Add transparency to container */
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    font-size: 1.1rem;
+    opacity: 0.7;  /* Apply opacity to the container */
+}
+
+h1, p, .signature, .switch-btn {
+    opacity: 1;  /* Ensure the text and buttons are fully opaque */
+}
+
+h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    color: #e91e63;
+    margin-bottom: 1rem;
+}
+
+.container p {
+    color: black;
+    text-shadow: none;
+}
+
+.signature {
+    margin-top: 1.5rem;
+    font-style: italic;
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px #000;
+}
+
+.switch-btn {
+    margin-top: 1rem;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    background-color: #e91e63;
+    color: white;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-family: 'Dancing Script', cursive;
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.switch-btn:hover {
+    background-color: #d81b60;
+}
+
+.hearts {
+    font-size: 2rem;
+    color: #e91e63;
+    margin-bottom: 1rem;
+}

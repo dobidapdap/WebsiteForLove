@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday, My Love</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Quicksand:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    .emoji {
+      position: fixed;
+      top: -50px;
+      font-size: 2rem;
+      animation: fall linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    #startScreen {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      font-family: 'Quicksand', sans-serif;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    #startScreen button {
+      padding: 10px 20px;
+      margin-top: 20px;
+      font-size: 18px;
+      background-color: pink;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <!-- Tap to Start Screen -->
+  <div id="startScreen">
+    <h2>Hi Allyzza.. 💖</h2>
+    <p>Tap to begin your surprise!</p>
+    <button onclick="initBirthday()">Start</button>
+  </div>
+
+  <div class="container" style="display: none;">
+    <div class="hearts">&#10084;</div>
+    <h1>Happy Birthday,<br> My Allyzza, my love!</h1>
+    <p>
+      On this special day, I just want to say…<br />
+      You make my world brighter, my heart fuller,<br />
+      and every moment better. I love you more than words can say.
+    </p>
+    <p class="signature">– yours, Doebe..</p>
+
+    <!-- Buttons -->
+    <button onclick="toggleGreeting()" class="switch-btn">Switch to Anniversary Message</button>
+    <button onclick="showSurprise()" class="switch-btn">Surprise!</button>
+  </div>
+
+  <!-- Music -->
+  <audio id="bgMusic" loop>
+    <source src="" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    let isAnniversary = false;
+    const music = document.getElementById("bgMusic");
+    let emojiInterval;
+
+    function initBirthday() {
+        document.getElementById("startScreen").style.display = "none";
+        document.querySelector(".container").style.display = "block";
+      
+        // Start birthday mode
+        isAnniversary = false;
+        
+        // Set the background image with responsive properties
+        document.body.style.backgroundImage = "url('images/BD11.jpg')";
+        document.body.style.backgroundSize = "cover";  // Ensures the image covers the full screen
+        document.body.style.backgroundPosition = "center";  // Centers the image
+        document.body.style.backgroundAttachment = "fixed";  // Keeps it fixed while scrolling
+      
+        setBirthdayContent();
+        playBirthday();
+      }
+      
+      
+
+    function playBirthday() {
+      stopEmojiRain();
+      music.src = "birthdaysong.mp3";
+      music.volume = 0.3;
+      music.play();
+      startEmojiRain(['❤️', '🎂', '💖', '🎉']);
+    }
+
+    function playAnniversary() {
+      stopEmojiRain();
+      music.src = "littlethings.mp3";
+      music.volume = 0.3;
+      music.play();
+      startEmojiRain(['❤️', '💐', '🌼', '🌺']);
+    }
+
+    function stopEmojiRain() {
+      clearInterval(emojiInterval);
+      document.querySelectorAll('.emoji').forEach(e => e.remove());
+    }
+
+    function toggleGreeting() {
+      const h1 = document.querySelector("h1");
+      const message = document.querySelector("p");
+      const signature = document.querySelector(".signature");
+      const button = document.querySelector(".switch-btn");
+
+      if (!isAnniversary) {
+        // Switch to Anniversary
+        isAnniversary = true;
+        music.pause();
+        music.currentTime = 0;
+        stopEmojiRain();
+
+        h1.innerHTML = "Happy 3rd Anniversary,<br>My Allyzza, my forever!";
+        message.innerHTML = "Three years of laughter, love, and unforgettable memories.<br>" +
+                            "Every moment with you is a beautiful chapter of our story.<br>" +
+                            "Here's to forever, hand in hand.";
+        signature.innerHTML = "– with all my heart, Doebe...";
+        button.textContent = "Back to Birthday Message";
+
+        playAnniversary();
+
+      } else {
+        // Switch back to Birthday
+        isAnniversary = false;
+        music.pause();
+        music.currentTime = 0;
+        stopEmojiRain();
+
+        setBirthdayContent();
+        playBirthday();
+      }
+    }
+
+    function setBirthdayContent() {
+      const h1 = document.querySelector("h1");
+      const message = document.querySelector("p");
+      const signature = document.querySelector(".signature");
+      const button = document.querySelector(".switch-btn");
+
+      h1.innerHTML = "Happy Birthday,<br> My Allyzza, my love!";
+      message.innerHTML = "On this special day, I just want to say…<br />" +
+                          "You make my world brighter, my heart fuller,<br />" +
+                          "and every moment better. I love you more than words can say.";
+      signature.innerHTML = "– yours, Doebe...";
+      button.textContent = "Switch to Anniversary Message";
+    }
+
+    function startEmojiRain(emojisArray) {
+      emojiInterval = setInterval(() => {
+        const emoji = document.createElement('div');
+        emoji.classList.add('emoji');
+        emoji.style.left = `${Math.random() * 100}vw`;
+        emoji.style.animationDuration = `${2 + Math.random() * 3}s`;
+        emoji.textContent = emojisArray[Math.floor(Math.random() * emojisArray.length)];
+        document.body.appendChild(emoji);
+
+        setTimeout(() => {
+          emoji.remove();
+        }, 5000);
+      }, 500);
+    }
+
+    function showSurprise() {
+      if (isAnniversary) {
+        loadSurpriseContent();
+      } else {
+        window.location.href = "love.html";
+      }
+    }
+    
+
+    function loadSurpriseContent() {
+      fetch('love2.html')
+        .then(response => response.text())
+        .then(data => {
+          document.body.innerHTML = data;
+        })
+        .catch(error => {
+          console.error("Error loading index.html:", error);
+          alert("Something went wrong. Please try again.");
+        });
+    }
+  </script>
+</body>
+</html>
